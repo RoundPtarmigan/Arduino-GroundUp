@@ -1,0 +1,25 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "avr-default",
+            "displayName": "AVR Default",
+            "description": "AVR setup",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_OBJCOPY": "${sourceDir}/cmakeObjCopy.sh",
+                "CMAKE_OBJDUMP": "${sourceDir}/cmakeObjDump.sh",
+                "MCU": "atmega328p",
+                "F_CPU": "16000000UL",
+                "CMAKE_C_COMPILER":"avr-gcc",
+                "CMAKE_C_FLAGS": "-Os -Wall -mmcu=atmega328p -DF_CPU=16000000UL",
+                "CMAKE_INSTALL_BINDIR": "Exec"
+            }
+        }
+    ]
+}
