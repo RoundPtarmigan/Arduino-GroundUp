@@ -8,9 +8,11 @@ target_link_libraries(SevenSegDisp
 target_sources(SevenSegDisp
   PRIVATE 
     single7SD.c
+    four7SD.c
   INTERFACE 
     codes7SD.h
   PUBLIC
     FILE_SET HEADERS 
     FILES
-      single7SD.h)
+      single7SD.h
+      four7SD.h)
