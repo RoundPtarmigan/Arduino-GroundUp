@@ -20,7 +20,6 @@ add_custom_command(
   COMMAND ${CMAKE_OBJDUMP} Blink
 )
 
-#message("${CMAKE_OBJCOPY} ${CMAKE_OBJCOPY_FLAGS} Blink Blink.hex")
 install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/Blink.hex
   TYPE BIN

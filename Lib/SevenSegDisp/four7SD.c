@@ -39,7 +39,7 @@ void set_digits_four_7SD(FourDigitDisp* disp, uint16_t number){
         uint16_t divisor = 1000;
         // move down the 10s places, removing most significant digits along the way
         for(uint8_t i = 0; i < 4; i++){
-            disp->digits[i] = number / divisor;
+            disp->digits[i] = digit[number / divisor];
             number = number % divisor;
             divisor /= 10;
         }
@@ -56,7 +56,7 @@ void display_four_7SD(FourDigitDisp* disp){
         if(numStart){
             simple_shift_to_parallel(disp->shiftReg, disp->digits[i]);
             set_io_pin_low(disp->digitPins[i]);
-            _delay_ms(20);
+            _delay_ms(5);
             set_io_pin_high(disp->digitPins[i]);
         }
     }

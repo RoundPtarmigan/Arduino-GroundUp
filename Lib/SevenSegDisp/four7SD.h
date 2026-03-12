@@ -14,4 +14,7 @@ FourDigitDisp config_four_7SD(SimpleShiftReg shift, IoPin ioDigit0, IoPin ioDigi
 // set digits for 7SD
 void set_digits_four_7SD(FourDigitDisp* disp, uint16_t number);
 
+// display function using "delay"
+void display_four_7SD(FourDigitDisp* disp);
+
 #endif

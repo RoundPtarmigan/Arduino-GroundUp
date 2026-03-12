@@ -20,7 +20,6 @@ add_custom_command(
   COMMAND ${CMAKE_OBJDUMP} TestSingle7SD
 )
 
-#message("${CMAKE_OBJCOPY} ${CMAKE_OBJCOPY_FLAGS} TestSingle7SD TestSingle7SD.hex")
 install(
   FILES ${CMAKE_CURRENT_BINARY_DIR}/TestSingle7SD.hex
   TYPE BIN
