@@ -17,14 +17,14 @@
 #define F  0b00000010
 #define G  0b00000001
 
-#define ZERO_7SD  A|B|C|D|E|F
-#define ONE_7SD   B|C
-#define TWO_7SD   A|B|G|E|D
-#define THREE_7SD A|B|G|C|D
-#define FOUR_7SD  F|G|B|C
-#define FIVE_7SD  A|F|G|C|D
-#define SIX_7SD   A|F|G|C|D|E
-#define SEVEN_7SD A|B|C
-#define EIGHT_7SD A|B|C|D|E|F|G
-#define NINE_7SD  A|F|G|B|C
+#define ZERO_7SD  (A|B|C|D|E|F)
+#define ONE_7SD   (B|C)
+#define TWO_7SD   (A|B|G|E|D)
+#define THREE_7SD (A|B|G|C|D)
+#define FOUR_7SD  (F|G|B|C)
+#define FIVE_7SD  (A|F|G|C|D)
+#define SIX_7SD   (A|F|G|C|D|E)
+#define SEVEN_7SD (A|B|C)
+#define EIGHT_7SD (A|B|C|D|E|F|G)
+#define NINE_7SD  (A|F|G|B|C)
 #define ERROR_7SD G

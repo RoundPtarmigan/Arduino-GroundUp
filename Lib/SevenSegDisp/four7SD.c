@@ -52,7 +52,7 @@ void set_digits_four_7SD(FourDigitDisp* disp, uint16_t number){
 void display_four_7SD(FourDigitDisp* disp){
     uint8_t numStart = 0;
     for(uint8_t i = 0; i < 4; i++){
-        numStart |= disp->digits[i];
+        numStart |= (disp->digits[i] != ZERO_7SD);
         if(numStart){
             simple_shift_to_parallel(disp->shiftReg, disp->digits[i]);
             set_io_pin_low(disp->digitPins[i]);
