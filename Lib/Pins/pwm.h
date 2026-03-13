@@ -168,7 +168,7 @@ void set_pwm_port_clk(PwmPort pwm, ClkDivs clkDiv);
 const flexAddr get_comp_reg(PwmPort port, PwmRegId reg);
 const flexAddr get_time_reg(PwmPort port);
 
-uint8_t num_flex_bytes(PwmPort port);
+uint8_t get_num_timer_bytes(PwmPort port);
 void set_pwm_duty(IoPin pin, uint16_t duty);
 
 void set_pwm_mode(IoPin pin, ComMode mode);

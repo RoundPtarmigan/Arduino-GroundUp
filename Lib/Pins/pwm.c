@@ -216,7 +216,7 @@ const flexAddr get_time_reg(PwmPort port){
 }
 
 // TODO: do I use this?
-uint8_t num_flex_bytes(PwmPort port){
+uint8_t get_num_timer_bytes(PwmPort port){
     switch(port){
             case PWM_PORT_D:
             case PWM_PORT_X:
