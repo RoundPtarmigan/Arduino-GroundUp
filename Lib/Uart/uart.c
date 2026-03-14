@@ -14,30 +14,41 @@ typedef struct UartCircularBuffer{
     char recBuffer[REC_BUFF_LEN];
     uint8_t readIdx;
     uint8_t writeIdx;
-    void (*pushCh)(struct UartCircularBuffer*, char ch);
-    void (*readBuff)(struct UartCircularBuffer*, char* ch);
+    uint8_t dataReady;
+    uint8_t (*pushCh)(struct UartCircularBuffer*, char ch);
+    uint8_t (*readBuff)(struct UartCircularBuffer*, char* ch);
 } UartCircularBuffer;
 
-void buff_pushCh(UartCircularBuffer* buffer, char ch){
+uint8_t buff_pushCh(UartCircularBuffer* buffer, char ch){
     if(((buffer->writeIdx + 1) % REC_BUFF_LEN) != buffer->readIdx){
+        if(ch == '\r'){
+            buffer->dataReady = 1;
+        }
         buffer->recBuffer[buffer->writeIdx] = ch;
-        buffer->writeIdx++;
+        buffer->writeIdx = (buffer->writeIdx+1) % REC_BUFF_LEN;
+        return 1;
     }
     else{
-        // buffer is full
+        buffer->dataReady = 1;
+        return 0; // buffer is full
     }
 }
 
-void buff_readLine(UartCircularBuffer* buffer, char* line){
+uint8_t buff_readLine(UartCircularBuffer* buffer, char* line){
     uint8_t lineIdx = 0;
-    while(buffer->readIdx != buffer->writeIdx){
-        line[lineIdx] = buffer->recBuffer[buffer->readIdx];
-        buffer->readIdx = (buffer->readIdx + 1) % REC_BUFF_LEN;
-        lineIdx++;
+    if(buffer->dataReady){
+        // continue reading the remaining entries
+        while(buffer->readIdx != buffer->writeIdx){
+            line[lineIdx] = buffer->recBuffer[buffer->readIdx];
+            buffer->readIdx = (buffer->readIdx + 1) % REC_BUFF_LEN;
+            lineIdx++;
+        }
+       buffer->dataReady = 0;
     }
+    return lineIdx; // chars read into line
 }
 
-UartCircularBuffer localBuffer = {{0}, 0, 0, // POD 
+UartCircularBuffer localBuffer = {{0}, 0, 0, 0, // POD 
                                    buff_pushCh, buff_readLine}; // function pointers
 
 void config_uart(){
@@ -52,18 +63,21 @@ void sendCh(char a){
     UDR0 = a; // send 8bit char
 }
 
+// write to Uart if provided non-empty string
 void writeUart(char* line){
     uint8_t charsSent = 0;
-    while(line[charsSent] != '\0' && charsSent < MAX_SENT){
+    while(line[charsSent] != '\r' && charsSent < MAX_SENT){
         sendCh(line[charsSent]);
         charsSent++;
     }
-    sendCh('\r');
-    sendCh('\n');
+    if(charsSent > 0){
+        sendCh('\r');
+        sendCh('\n');
+    }
 }
 
-void readUart(char* line){
-    localBuffer.readBuff(&localBuffer, line);
+uint8_t readUart(char* line){
+    return localBuffer.readBuff(&localBuffer, line); // return bytes read
 }
 
 char getCh(){
