@@ -5,9 +5,10 @@
 int main(){
     config_uart();
     sei();
-    uint8_t toggle = 0;
+    char local[40];
     while(1){
         _delay_ms(1000);
-        //sendLine(recBuffer);
+        readUart(local);
+        sendUart(local);
     }
 }
