@@ -2,12 +2,8 @@
 #define UART_H
 
 void config_uart();
-void sendCh(char a);
 
-void sendLine(char* line);
-
-char getCh();
-
-void flushRecBuffer();
+void writeUart(char* line);
+void readUart(char* line);
 
 #endif
