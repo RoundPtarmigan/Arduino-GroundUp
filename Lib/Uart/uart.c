@@ -66,7 +66,7 @@ void sendCh(char a){
 // write to Uart if provided non-empty string
 void writeUart(char* line){
     uint8_t charsSent = 0;
-    while(line[charsSent] != '\r' && charsSent < MAX_SENT){
+    while(line[charsSent] != '\0' && charsSent < MAX_SENT){
         sendCh(line[charsSent]);
         charsSent++;
     }

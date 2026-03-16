@@ -22,13 +22,13 @@ void set_circular_comp_clock(CircularCompClock* clock, uint16_t counts){
 // can fail if long timing requirements are required      
 uint8_t wait_circular_comp_clock(CircularCompClock* clock){
     if(clock->watchCount==clock->currCount){
-        return 1;
+        return 1; // ready to be set
     }
     // if watch point is before wraparound, we must look for wraparound
     else if(clock->watchCount > clock->currCount){
         uint16_t time = get_curr_time(clock->timer);
         if((time > clock->watchCount) || (time < clock->currCount)){ // either we're above watch point or we wrapped
-            return 1;
+            return 1; // done and ready to be set
         }
         else{
             return 0;
@@ -37,8 +37,8 @@ uint8_t wait_circular_comp_clock(CircularCompClock* clock){
     // if watch point is AFTER wraparound, we just wait to pass it
     else{ // clock->watchCount < clock->currCount
         uint16_t time = get_curr_time(clock->timer);
-        if(time > clock->watchCount){
-            return 1;
+        if((time < clock->currCount) && (time > clock->watchCount)){
+            return 1; // done and ready to be set
         }
         else{
             return 0;

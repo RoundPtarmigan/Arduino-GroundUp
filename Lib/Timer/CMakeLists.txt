@@ -3,7 +3,7 @@ add_library(Timer)
 target_sources(Timer
   PRIVATE 
     timer.c
-    clocks.h
+    clocks.c
   PUBLIC
     FILE_SET HEADERS
     FILES 
